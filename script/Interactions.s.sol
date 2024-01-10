@@ -4,6 +4,7 @@ pragma solidity ^0.8.0;
 
 import {Script} from "forge-std/Script.sol";
 import {NFT} from "../src/NFT.sol";
+import {DevOpsTools} from "lib/foundry-devops/src/DevOpsTools.sol";
 
 /** 
  Deploy to Anvil (anvil chain started in a different terminal): 
@@ -14,10 +15,10 @@ import {NFT} from "../src/NFT.sol";
  @dev use --interactive for private key with real money
 */
 contract MintNft is Script {
-    address public mostRecentlyDeployed = 0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512;
     string public constant uri = "ipfs://Qmc9JxfqaccjBxjY44aCugErfRDvmCzF8JvpnDibMgoses";
 
     function run() external {
+        address mostRecentlyDeployed = DevOpsTools.get_most_recent_deployment("NFT", block.chainid);
         mintNftOnContract(mostRecentlyDeployed, uri);
     }
 
